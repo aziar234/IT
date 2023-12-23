@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partenaria</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="box2" id="activationInfo">
+            Activé le 
+            <div id="dateTime"></div>
+            Valable pendant
+            <div id="countdown"></div>
+        </div>
+       
+        <button class="buton" type="button">J'ai récupéré mon lot</button>
+    </div>
+
+    <style>
+        body {
+            background-color: rgb(255, 219, 226);
+            background-image: url("pizza.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+            margin: 0; /* Remove default margin */
+            height: 100vh; /* Make sure body takes up the full height of the viewport */
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .box {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+        }
+
+        .box2 {
+            text-align: center;
+            
+            padding: 20%;
+            font-family: Inter,arial,sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            font-weight: 200;
+        }
+        #dateTime{
+            font-weight: bold;
+        }
+        #countdown{
+            font-size: 32px;
+            line-height: 40px;
+            color: #43ae45
+        }
+
+        .buton {
+            margin-top: 16px;
+            background-color: #e64052;
+            box-shadow: 0 3px 0 #B3364F;
+            border-radius: 100px;
+            color: #fff;
+            flex-shrink: 0;
+            font-weight: 700;
+            padding: 20px;
+            position: relative;
+            border-width: 0;
+            z-index: 0;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: center;
+            width: 90%;
+            height: 65px;
+            font-size: 17px;
+        }
+    </style>
+
+    <script>
+        // Function to format the date and time
+        function formatDateAndTime() {
+            const now = new Date();
+            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+            const formattedTime = `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
+            return `${formattedDate} à ${formattedTime}`;
+        }
+
+        // Function to update the date and time
+        function updateDateTime() {
+            const dateTimeElement = document.getElementById("dateTime");
+            dateTimeElement.innerHTML = formatDateAndTime();
+        }
+
+        // Function to update the countdown timer
+        function updateCountdown() {
+            const countdownElement = document.getElementById("countdown");
+            const targetTime = new Date().getTime() + 5 * 60 * 1000; // 5 minutes in milliseconds
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetTime - now;
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownElement.innerHTML = `${minutes}: ${seconds < 10 ? '0' : ''}${seconds}`;
+            }, 1000);
+        }
+
+        // Initial setup
+        updateDateTime();
+        updateCountdown();
+    </script>
+
+</body>
+
+</html>
