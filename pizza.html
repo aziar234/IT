@@ -10,6 +10,7 @@
 
 <body>
     <div class="box">
+        <img src="tiramisu.png"/>
         <div class="box2" id="activationInfo">
             Activé le 
             <div id="dateTime"></div>
@@ -23,22 +24,20 @@
     <style>
         body {
             background-color: rgb(255, 219, 226);
-            background-image: url("pizza.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            
             text-align: center;
             margin: 0; /* Remove default margin */
             height: 100vh; /* Make sure body takes up the full height of the viewport */
             display: flex;
             flex-direction: column;
             font-family: Arial, Helvetica, sans-serif;
-            background-size: 100% 97%;
         }
-
+        img{
+            margin-top: 4%;
+        }
         .box {
             position: absolute;
-            bottom: 0;
+            
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -47,11 +46,16 @@
         .box2 {
             text-align: center;
             
-            padding: 16%;
+            padding: 20%;
             font-family: Inter,arial,sans-serif;
             font-size: 17px;
             line-height: 1.5;
-            font-weight: 200;
+            
+            font-weight: 200s;
+            background-image: url("font.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         #dateTime{
             font-weight: bold;
@@ -70,7 +74,8 @@
             color: #fff;
             flex-shrink: 0;
             font-weight: 700;
-            padding: 20px;
+            padding-top: 20px;
+            
             position: relative;
             border-width: 0;
             z-index: 0;
@@ -85,39 +90,43 @@
         }
     </style>
 
-    <script>
-        // Function to format the date and time
-        function formatDateAndTime() {
-            const now = new Date();
-            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-            const formattedTime = `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
-            return `${formattedDate} à ${formattedTime}`;
-        }
+<script>
+    // Fonction pour formater le jour et le mois avec un zéro devant les nombres inférieurs à 10
+    function formatWithLeadingZero(number) {
+        return number < 10 ? `0${number}` : number;
+    }
 
-        // Function to update the date and time
-        function updateDateTime() {
-            const dateTimeElement = document.getElementById("dateTime");
-            dateTimeElement.innerHTML = formatDateAndTime();
-        }
+    // Fonction pour formater la date et l'heure
+    function formatDateAndTime() {
+        const now = new Date();
+        const formattedDate = `${formatWithLeadingZero(now.getDate())}/${formatWithLeadingZero(now.getMonth() + 1)}/${now.getFullYear()}`;
+        const formattedTime = `${now.getHours()}:${formatWithLeadingZero(now.getMinutes())}`;
+        return `${formattedDate} à ${formattedTime}`;
+    }
 
-        // Function to update the countdown timer
-        function updateCountdown() {
-            const countdownElement = document.getElementById("countdown");
-            const targetTime = new Date().getTime() + 5 * 60 * 1000; // 5 minutes in milliseconds
-            setInterval(() => {
-                const now = new Date().getTime();
-                const distance = targetTime - now;
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                countdownElement.innerHTML = `${minutes}: ${seconds < 10 ? '0' : ''}${seconds}`;
-            }, 1000);
-        }
+    // Fonction pour mettre à jour la date et l'heure
+    function updateDateTime() {
+        const dateTimeElement = document.getElementById("dateTime");
+        dateTimeElement.innerHTML = formatDateAndTime();
+    }
 
-        // Initial setup
-        updateDateTime();
-        updateCountdown();
-    </script>
+    // Fonction pour mettre à jour le compte à rebours
+    function updateCountdown() {
+        const countdownElement = document.getElementById("countdown");
+        const targetTime = new Date().getTime() + 5 * 60 * 1000; // 5 minutes en millisecondes
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetTime - now;
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            countdownElement.innerHTML = `${minutes}:${formatWithLeadingZero(seconds)}`;
+        }, 1000);
+    }
 
+    // Configuration initiale
+    updateDateTime();
+    updateCountdown();
+</script>
 </body>
 
 </html>
